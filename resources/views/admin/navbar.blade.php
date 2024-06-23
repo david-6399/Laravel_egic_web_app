@@ -63,7 +63,7 @@
                     <i class="mdi mdi-view-grid"></i>
                 </a>
             </li>
-            <li class="nav-item dropdown border-left">
+            {{-- <li class="nav-item dropdown border-left">
                 <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
                     aria-expanded="false">
                     <i class="mdi mdi-email"></i>
@@ -75,7 +75,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            {{-- <img src="assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic"> --}}
+                            <img src="assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">
                         </div>
                         <div class="preview-item-content">
                             <p class="preview-subject ellipsis mb-1">Mark send you a message</p>
@@ -85,7 +85,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            {{-- <img src="assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic"> --}}
+                            <img src="assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">
                         </div>
                         <div class="preview-item-content">
                             <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>
@@ -95,7 +95,7 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item preview-item">
                         <div class="preview-thumbnail">
-                            {{-- <img src="assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic"> --}}
+                            <img src="assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">
                         </div>
                         <div class="preview-item-content">
                             <p class="preview-subject ellipsis mb-1">Profile picture updated</p>
@@ -105,7 +105,7 @@
                     <div class="dropdown-divider"></div>
                     <p class="p-3 mb-0 text-center">4 new messages</p>
                 </div>
-            </li>
+            </li> --}}
             <li class="nav-item dropdown border-left">
                 <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#"
                     data-toggle="dropdown">

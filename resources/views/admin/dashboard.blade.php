@@ -541,7 +541,7 @@
                 },
                 options: {
                     scales: {
-                        y: {
+                        y: {p
                             beginAtZero: true
                         }
                     }

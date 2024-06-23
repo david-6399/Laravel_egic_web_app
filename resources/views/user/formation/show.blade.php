@@ -131,13 +131,12 @@
                                             <h3>{{ $module2->name }}</h3>
 
                                             @foreach ($module2->support_cours as $support_cours)
-                                                @if (   $usertype == 3)
+                                                @can('student')
                                                     <a href="/contenus/{{ $support_cours->contenu }}"
-                                                        class="btn get-started-btn">{{ $support_cours->name }}</a>
+                                                    class="btn get-started-btn">{{ $support_cours->name }}</a>
                                                 @else
-                                                    <a href="#"
-                                                        class="btn get-started-btn">{{ $support_cours->name }}</a>
-                                                @endif
+                                                <a href="#" class="btn get-started-btn">{{ $support_cours->name }}</a>
+                                                @endcan
                                             @endforeach
 
                                         </div>

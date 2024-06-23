@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFormationRequest;
 use App\Models\module;
 use App\Models\program;
 use App\Models\formation;
@@ -72,15 +73,17 @@ class FormationController extends Controller
             'image' => ' mimes:png,jpg,jpeg | max:5048',
             'cod_program' =>' required|array'
             ]);
+        
 
         $check_cod_program = formation::where('cod_program',$request->cod_program)->first();
 
         if($check_cod_program){
             return to_route('formation.create')->with('error','program has been added');
         }else{
-
-            $newimage = uniqid().'-'.$request->nome_forma . '.'. $request->image->extension();
-            $request->image->move(public_path('images'),$newimage);
+            if($request->image){
+                $newimage = uniqid().'-'.$request->nome_forma . '.'. $request->image->extension();
+                $request->image->move(public_path('images'),$newimage);
+            }
                 
             $formation = new formation ;
             
@@ -89,7 +92,9 @@ class FormationController extends Controller
             $formation->tarif_forma = $request->input('tarif_forma');
             $formation->cod_typeformation = $request->input('cod_typeformation');
             $formation->cod_program = $request->input('cod_program');
-            $formation->image_path = $newimage;
+            if($request->image){
+                $formation->image_path = $newimage;
+            }
     
             $formation->save();
         }

@@ -42,21 +42,22 @@ class program_moduleController extends Controller
      */
     public function store(Request $request)
     {
-        $check_program = program_modul::where('program_id',$request->program_id)->first();
-        $check_module = program_modul::where('module_id',$request->module_id)->first();
+        $check_program = program_modul::where('program_id',$request->program_id)->where('module_id',$request->module_id)->first();
+        // $check_module = program_modul::where('module_id',$request->module_id)->first();
         
         if($check_program){
-            if($check_module){
-                return to_route('program_module.create')->with('error','Le Program Avec Ce Module Existent Déjà - Entrez à Nouveau');
-            }
-            $program_module = new program_modul;
-    
-            $program_module->program_id = $request->input('program_id');
-            $program_module->module_id = $request->input('module_id');
-    
-            $program_module->save();
-    
-            return redirect()->route('program_module.index');
+           
+            return to_route('program_module.create')->with('error','Le Program Avec Ce Module Existent Déjà - Entrez à Nouveau');
+        }
+        else{
+        $program_module = new program_modul;
+
+        $program_module->program_id = $request->input('program_id');
+        $program_module->module_id = $request->input('module_id');
+
+        $program_module->save();
+
+        return redirect()->route('program_module.index');
         }
 
     }
