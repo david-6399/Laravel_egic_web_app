@@ -47,11 +47,12 @@
                             <p >
                                 La Date On : {{  \Carbon\Carbon::parse($test->testcreatedat)->format('j F y')}}
                             </p>
-                            <div class="social">
-                                <a href=""><i class="bi bi-twitter"></i></a>
-                                <a href=""><i class="bi bi-facebook"></i></a>
-                                <a href=""><i class="bi bi-instagram"></i></a>
-                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            <div class="">
+                                <button>
+                                    <a href="{{route('imprimer')}}">
+                                        imprimer
+                                    </a>
+                                </button>
                             </div>
                         </div>
                     </div>

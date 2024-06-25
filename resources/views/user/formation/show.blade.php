@@ -13,6 +13,7 @@
         @if (session('message'))
             <div class="alert alert-info" role="alert">{{ session('message') }}</div>
         @endif
+       
 
         <!-- ======= Cource Details Section ======= -->
         <section id="course-details" class="course-details">
@@ -39,7 +40,12 @@
                             <div class="alert alert-danger">
                                 {{session('error')}}
                             </div>
-                            @endif
+                        @endif
+                        @if (session('seccess'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('seccess') }}
+                            </div>
+                        @endif
                         <div class="course-info d-flex justify-content-between align-items-center">
                             <h5>Créer Par</h5>
                             <p><a href="#">Admin</a></p>

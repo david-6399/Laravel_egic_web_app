@@ -15,7 +15,7 @@
     </div>
 
 
-    <div class="p-5 mb-5" style="border-bottom: dashed 2px ">
+    <div class="p-5 mb-5">
         @if (count($result_by_niv) >= 1)
             <h1>Des Formation adaptés à votre niveau académique</h1>
             <div class="row">

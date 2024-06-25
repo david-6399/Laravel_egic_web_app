@@ -1,20 +1,19 @@
  @extends('user.index')
  @section('content')
- <section id="hero" class="d-flex justify-content-center align-items-center">
-     <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
-         <h1>Ecole de Gestion Informatique et de Commerce</h1>
-         <h2>L’Ecole de Gestion d’Informatique et de Commerce, EGIC Ibn Sina, est une école de commerce située à Oran,
-             en
-             Algérie.</h2>
-             @if (auth()->check() )
-                @if(auth()->user()->usertype == 3)
-                    <a href="/course" class="btn btn-get-started">Consultés Les Formations</a>
-                @elseif(auth()->user()->usertype != 1)
-                <div class="btn btn-get-started">
-                    @livewire('checkstudient')
-                </div>
-                @endif
-             
+     <section id="hero" class="d-flex justify-content-center align-items-center">
+         <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+             <h1>Ecole de Gestion Informatique et de Commerce</h1>
+             <h2>L’Ecole de Gestion d’Informatique et de Commerce, EGIC Ibn Sina, est une école de commerce située à Oran,
+                 en
+                 Algérie.</h2>
+             @if (auth()->check())
+                 @if (auth()->user()->usertype == 3)
+                     <a href="/course" class="btn btn-get-started">Consultés Les Formations</a>
+                 @elseif(auth()->user()->usertype != 1)
+                     <div class="btn btn-get-started">
+                         @livewire('checkstudient')
+                     </div>
+                 @endif
              @else
                  <a href="/login" class="btn btn-get-started">Bienvenu</a>
              @endif
@@ -213,10 +212,10 @@
                  </div>
                  <div class="row" data-aos="zoom-in" data-aos-delay="100">
                      @foreach ($type_formation as $type_formation)
-                         <div class="col-lg-2 col-md-4" >
+                         <div class="col-lg-2 col-md-4">
                              <div class="row text-center icon-box m-2">
-                                 <i class="bi bi-patch-check pb-3" style="color: #1F76B9" ></i>
-                                 <h3><a href="{{url('/')}}">{{ $type_formation->name }}</a></h3>
+                                 <i class="bi bi-patch-check pb-3" style="color: #1F76B9"></i>
+                                 <h3><a href="{{ url('/') }}">{{ $type_formation->name }}</a></h3>
                              </div>
                          </div>
                      @endforeach
@@ -269,58 +268,14 @@
                          </div> <!-- End Course Item-->
                      @endforeach
 
-                     
-                     
-                    </div>
-                    <a href="{{url('course')}}" class=" get-started-btn mt-4">َAfficher le reste ...</a>
-                    
+
+
+                 </div>
+                 <a href="{{ url('course') }}" class=" get-started-btn mt-4">َAfficher le reste ...</a>
+
              </div>
          </section><!-- End Popular formation Section -->
 
-         <!-- ======= program Section ======= -->
-         <section id="courses" class="courses">
-             <div class="container" data-aos="fade-up">
-
-                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
-
-                     <div class="section-title">
-                         <h2>Program</h2>
-                         <p>Nouvelle Program</p>
-                     </div>
-                     @foreach ($program as $program)
-                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-                             <div class="course-item">
-                                 <div class="course-content">
-                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                         <h4>Web Development</h4>
-                                         <p class="price">$169</p>
-                                     </div>
-
-                                     <h3><a href="course-details.html">{{ $program->titre }}</a></h3>
-                                     <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae
-                                         dolores
-                                         dolorem
-                                         tempore.</p>
-                                     <div class="trainer d-flex justify-content-between align-items-center">
-                                         <div class="trainer-profile d-flex align-items-center">
-                                             {{-- <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
-                                             <span>Antonio</span>
-                                         </div> --}}
-                                         <div class="trainer-rank d-flex align-items-center">
-                                             <i class="bx bx-user"></i>&nbsp;50
-                                             &nbsp;&nbsp;
-                                             <i class="bx bx-heart"></i>&nbsp;65
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div> <!-- End Course Item-->
-                     @endforeach
-
-                 </div>
-
-             </div>
-         </section><!-- End program Section -->
 
 
          <!-- ======= Popular Event Section ======= -->
@@ -369,7 +324,7 @@
 
 
                  </div>
-                 <a href="{{url('evenement')}}" class=" get-started-btn mt-4">َAfficher le reste ...</a>
+                 <a href="{{ url('evenement') }}" class=" get-started-btn mt-4">َAfficher le reste ...</a>
              </div>
          </section><!-- End Popular event Section -->
 

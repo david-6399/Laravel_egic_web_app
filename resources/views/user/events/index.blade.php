@@ -24,7 +24,7 @@
               <div class="card-body">
                 <h5 class="card-title"><a href="{{route('event.show',$event->id)}}">{{$event->titre}}</a></h5>
                 <p class="fst-italic text-center">{{\carbon\carbon::parse($event->event_start)->format('D d M Y | H:i')}}</p>
-                <p class="card-text">Lor{{$event->description}}</p>
+                <p class="card-text p-lines" >Lor{{$event->description}}</p>
               </div>
             </div>
           </div>

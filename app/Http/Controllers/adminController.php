@@ -123,6 +123,7 @@ class adminController extends Controller
             if(!array_key_exists($month , $nbuser)){
                 $nbuser[$month] = 0 ;
             }
+            
         }
         ksort($nbuser);
 

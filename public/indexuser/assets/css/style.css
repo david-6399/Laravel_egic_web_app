@@ -1838,3 +1838,10 @@ section {
   mask-size: 100% 100%;
 }
 
+.p-lines{
+  width: 100%; /* Set a width for the card */
+  overflow: hidden; /* Hide overflow text */
+  white-space: nowrap; /* Prevent text wrapping */
+  text-overflow: ellipsis; /* Show ellipsis (...) when text overflows */
+}
+

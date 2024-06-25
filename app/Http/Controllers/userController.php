@@ -17,6 +17,8 @@ use App\Models\user_formation;
 use App\Models\user_event;
 use App\Models\user;
 use App\Models\event;
+use App\Models\formation_niv_etud;
+use App\Models\user_niv_etud;
 
 class userController extends Controller
 {
@@ -39,27 +41,43 @@ class userController extends Controller
             }
             else{
 
-                $user_formation = new user_formation ; 
+                $CheckNivOfUser = user_niv_etud::where('user_id', 'like' , auth::user()->id)
+                    ->pluck('niv_etud_id')
+                    ->toArray();
                 
-                $user_formation->user_id = $user->id ;
-                $user_formation->formation_id = $formation->id ;
+                $CheckFormationNiv = formation_niv_etud::where('formation_id', formation::find($id)->id)
+                    ->pluck('niv_etudiant_id')
+                    ->toArray();
+
+                $commonValues = array_intersect($CheckFormationNiv , $CheckNivOfUser);
+                    
+                if(!$commonValues){
+                    return redirect()->back()->with('error',"La formation n'est pas adaptée à votre niveau académique");
+                }
+                else{
+
+                    $user_formation = new user_formation ; 
+                    
+                    $user_formation->user_id = $user->id ;
+                    $user_formation->formation_id = $formation->id ;
+                    
+                    $user_formation->save();
+                    
+                    $formation->increment('favoris');
+                }
                 
-                $user_formation->save();
-                
-                $formation->increment('favoris');
-                
-                
-                return redirect()->back();
-            }
+        
+        return redirect()->back()->with('seccess',"La Formation a été ajouté à votre panier");
+        }
 
     }
 
     public function afficher_mycart(){
 
 
-    $formation = formation::all();
-    $user = user::with('formation')->where('user_id',auth::user()->id);
-    $user_formation = user_formation::all();
+                // $formation = formation::all();
+                // $user = user::with('formation')->where('user_id',auth::user()->id);
+                // $user_formation = user_formation::all();
     
     $test = db::table('formations-user')
         ->join('users' , function($join){
@@ -82,12 +100,9 @@ class userController extends Controller
         $event = event::find($id);
         $user = auth::user();
 
-        // $check_user = user_event::where('user_id',$user->id)->first();
-        // $check_event = user_event::where('event_id',$event->id)->first();
-
         $check = user_event::where('user_id',$user->id)->where('event_id',$event->id)->first();
 
-        // dd($check);
+        
         if($check){
             return redirect()->back()->with('error','Vous êtes déjà inscrit');  
         }

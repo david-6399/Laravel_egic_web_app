@@ -18,6 +18,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\supportcoursController;
 use App\Http\Controllers\UserNivEtudController;
+use App\Http\Controllers\CommentController;
 use App\Models\user_formation;
 use App\Models\formation;
 use App\Models\user;
@@ -38,7 +39,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\adminController::class, 'dashboard'])->name('dashboard');
 
 
 // Resource Route start here
@@ -47,35 +47,39 @@ Route::resource('/formation', FormationController::class);
 
 // Route::resource('/formation/create', FormationController::class)->middleware(['auth','check_usertype']);
 
-Route::resource('/program', ProgramController::class)->middleware(['auth','check_usertype']);
+route::middleware('auth')->group( function(){
 
-Route::resource('/débouché', débouchéController::class)->middleware(['auth','check_usertype']);
+    route::resource('/user_niv_etud',UserNivEtudController::class);
 
-Route::resource('/module', ModuleController::class)->middleware(['auth','check_usertype']);
+    route::middleware('check_usertype')->group(function(){
+        Route::resource('/program', ProgramController::class);
+        Route::resource('/débouché', débouchéController::class);        
+        Route::resource('/module', ModuleController::class);        
+        Route::resource('/type_forma', TypeFormationController::class);        
+        Route::resource('/niv_etudiant', NivEtudiantController::class);        
+        route::resource('/forma_débouché',formation_débouchéController::class);        
+        Route::resource('/forma_nivetudiant', App\Http\Controllers\formation_niv_etudiantController::class);        
+        Route::resource('/program_module', program_moduleController::class);        
+        Route::resource('/support_cours', supportcoursController::class);    
+    });
+});
 
-Route::resource('/type_forma', TypeFormationController::class)->middleware(['auth','check_usertype']);
+
 
 Route::resource('/event', EventController::class);
-
-Route::resource('/niv_etudiant', NivEtudiantController::class)->middleware(['auth','check_usertype']);
-
-route::resource('/forma_débouché',formation_débouchéController::class)->middleware(['auth','check_usertype']);
-
-route::resource('/user_niv_etud',UserNivEtudController::class)->middleware('auth');
-
-Route::resource('/forma_nivetudiant', App\Http\Controllers\formation_niv_etudiantController::class)->middleware(['auth','check_usertype']);
-
-Route::resource('/program_module', program_moduleController::class)->middleware(['auth','check_usertype']);
-
-Route::resource('/support_cours', supportcoursController::class)->middleware(['auth','check_usertype']);
-
 
 // Resource Route end here
 
 // Admin Controller
 
-route::post('approvuser/{id}',[App\Http\Controllers\adminController::class,'approvuser']);
-route::get('/event_list/{id}',[adminController::class,'event_list']);
+route::controller(adminController::class)->group(function(){
+    
+    route::post('approvuser/{id}','approvuser');
+    route::get('/event_list/{id}','event_list');
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
+    // route::get('/no-data-in-page','nodata')->name('nodata');
+});
+
 
 
 // user Controllers start here |>|>
@@ -93,25 +97,30 @@ route::get('/about',function(){
     return view('user.about',compact('comment'));
 });
 
-route::get('/course' , [ userController::class , 'afficher_course'])->name('course');
+route::controller(userController::class)->group(function(){
+    
+    route::middleware('auth')->group(function(){
+        Route::get('/mycart',  'afficher_mycart');
+        Route::post('/add_to_cart/{id}', 'add_to_cart');
+        Route::post('/event_abonne/{id}',  'event_abonne');
+    });
 
-Route::get('/mycart', [userController::class , 'afficher_mycart'])
-    ->middleware('auth');
+    route::get('/course' , 'afficher_course')->name('course'); 
+    Route::get('/search',  'search')->name('search');
 
-Route::post('/add_to_cart/{id}', [userController::class , 'add_to_cart'] )
-    ->middleware('auth');
+});
 
-route::post('/add_comment/{id}',[App\Http\Controllers\CommentController::class,'add_comment'])
-    ->middleware('auth');
+route::controller(CommentController::class)->middleware('auth')->group(function(){
+    route::post('/add_comment/{id}','add_comment');
+    route::post('/add_event_comment/{id}','add_event_comment');
+});
 
-route::post('/add_event_comment/{id}',[App\Http\Controllers\CommentController::class,'add_event_comment'])
-    ->middleware('auth');
 
-Route::post('/event_abonne/{id}', [userController::class , 'event_abonne'])
-    ->middleware('auth');
 
-Route::get('/search', [userController::class , 'search'])->name('search');
 
-route::get('/no-data-in-page',[App\Http\Controllers\adminController::class , 'nodata'])->name('nodata');
+
+route::get('imprimer', function (){
+    dd('L"utilisateur va recevé un mail de préinscription');
+})->name('imprimer');
 
 // user Controllers end here <|<|
