@@ -102,9 +102,6 @@ class adminController extends Controller
             ]
         ];
 
-
-        //  number of user each month 
-        // user by month 
         
         $users = user::select([
             db::raw('MONTH(created_at) as month'),
@@ -112,7 +109,7 @@ class adminController extends Controller
         ])->groupBy('month')->get();
         
         $nbuser = [] ;
-
+   
         foreach($users as $users){
             $nbuser[$users->month] = $users->count;
         }
@@ -127,7 +124,6 @@ class adminController extends Controller
         }
         ksort($nbuser);
 
-        // dd(array_values($nbuser));
 
         $userchart = [
             'label' => array_values($label),
@@ -142,14 +138,49 @@ class adminController extends Controller
             ],
         ];
 
-        // dd($userchart['dataset']);
+        $formations = formation::pluck('nome_forma')->toarray();
+        $favoris = formation::pluck('favoris')->toarray();
+       
+        $formationandfavoris = [];
+        foreach($formations as $index => $formation){
+            $test = $favoris[$index];
+            $formationandfavoris [] = [
+                'formation' => $formation,
+                'favoris' => $test
+            ];
+        }
+        usort($formationandfavoris, function($a, $b) {
+            return $b['favoris'] - $a['favoris'];
+        });
+        
+        $formationandfavoris = array_slice($formationandfavoris, 0, 5);
 
+        $labels = array_column($formationandfavoris, 'formation');
+        $data = array_column($formationandfavoris, 'favoris');
+
+        $chart99 = [
+            'label' => $labels,
+            'dataset' => [
+                [
+                    'label' => 'Favoris',
+                    'data' => $data,
+                    'backgroundColor' => [
+                        'rgb(255, 65, 145)',
+                        'rgb(255, 240, 120)',
+                        'rgb(54, 186, 152)',
+                        'rgb(244, 162, 97)',
+                        'rgb(231, 111, 81)'
+                    ],
+                    'borderWidth' => 1,
+                ]
+            ]
+        ];
         
-        
+
         if(auth::check()){
             $usertype = auth::user()->usertype;
             if ($usertype == 1) {
-                return view('admin.dashboard',compact('lastadditions','mostfavoris','userinfos','formation','niv_etudiant','comment','mycahrt','userchart'));
+                return view('admin.dashboard',compact('lastadditions','mostfavoris','userinfos','formation','niv_etudiant','comment','mycahrt','userchart','chart99'));
             }
             else{
                 abort(404);

@@ -14,9 +14,11 @@ class ImprimerLinscriptionSurEmail extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+
+     public $testmail ;
+    public function __construct($testmail)
     {
-        //
+        $this->testmail = $testmail;
     }
 
     /**
@@ -36,7 +38,7 @@ class ImprimerLinscriptionSurEmail extends Notification
     {
         return (new MailMessage)
                     ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
+                    ->action('Your cart is here', url('/mycart'))
                     ->line('Thank you for using our application!');
     }
 

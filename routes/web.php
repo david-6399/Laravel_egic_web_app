@@ -22,7 +22,7 @@ use App\Http\Controllers\CommentController;
 use App\Models\user_formation;
 use App\Models\formation;
 use App\Models\user;
-
+use App\Notifications\ImprimerLinscriptionSurEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,12 +115,15 @@ route::controller(CommentController::class)->middleware('auth')->group(function(
     route::post('/add_event_comment/{id}','add_event_comment');
 });
 
-
-
-
-
 route::get('imprimer', function (){
     dd('L"utilisateur va recevé un mail de préinscription');
 })->name('imprimer');
 
 // user Controllers end here <|<|
+
+route::get('/send', function(){
+    $user = user::find(auth::user()->id);
+    // dd($user);    
+    $testmail = 'hello';
+    $user->notify(new ImprimerLinscriptionSurEmail($testmail));
+});

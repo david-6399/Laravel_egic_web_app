@@ -1,6 +1,5 @@
 @extends('admin.index')
 @section('content')
-    
     <div class="main-panel">
         <div class="content-wrapper">
 
@@ -13,7 +12,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">0{{ count($formation) }}</h3>
+                                        {{-- <h3 class="mb-0">0{{ count($formation) }}</h3> --}}
                                         <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
                                     </div>
                                 </div>
@@ -272,9 +271,37 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12 grid-margin">
+                    <div class="card">
+                        <canvas id="formaparfavori"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                const ctxxx = document.getElementById('formaparfavori').getContext('2d');
+                new Chart(ctxxx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: @json($chart99['label']),
+                        datasets: @json($chart99['dataset'])
+                        
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                })
+            });
+            </script>
+
 
             <div class="row ">
-
                 <div class="col-12 grid-margin">
                     <div class="card">
                         <div class="card-body">
@@ -524,31 +551,32 @@
             </div>
 
         </div>
-        
-       <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctxx = document.getElementById('usernbcahrt').getContext('2d');
 
-            // Get the data from Blade
-            const labels = @json($userchart['label']);
-            const datasets = @json($userchart['dataset']);
 
-            new Chart(ctxx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        y: {p
-                            beginAtZero: true
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctxx = document.getElementById('usernbcahrt').getContext('2d');
+
+                // Get the data from Blade
+                const labels = @json($userchart['label']);
+                const datasets = @json($userchart['dataset']);
+
+                new Chart(ctxx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
+                });
             });
-        });
-    </script>
+        </script>
 
         <script>
             const ctx = document.getElementById('myChart').getContext('2d');
