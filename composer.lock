@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fc20c8664aa6be81c952354b52467e0",
+    "content-hash": "b5c54eb4fc96928e504a40c3a676a250",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -6897,16 +6897,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.15",
+            "version": "10.5.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "86376e05e8745ed81d88232ff92fee868247b07b"
+                "reference": "5f124e3e3e561006047b532fd0431bf5bb6b9015"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/86376e05e8745ed81d88232ff92fee868247b07b",
-                "reference": "86376e05e8745ed81d88232ff92fee868247b07b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5f124e3e3e561006047b532fd0431bf5bb6b9015",
+                "reference": "5f124e3e3e561006047b532fd0431bf5bb6b9015",
                 "shasum": ""
             },
             "require": {
@@ -6978,7 +6978,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.24"
             },
             "funding": [
                 {
@@ -6994,7 +6994,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-22T04:17:47+00:00"
+            "time": "2024-06-20T13:09:54+00:00"
         },
         {
             "name": "sebastian/cli-parser",

@@ -2,8 +2,11 @@
 
 namespace Database\Factories;
 
+use Faker\Extension\CountryExtension;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
 class UserFactory extends Factory
 {
@@ -14,15 +17,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'address' => 'oran',
-            'usertype' => 1,
-            'phone' => +21369856344,
-            'password' => '00000000', // password
+            'address' => $this->faker->city(),
+            'usertype' => rand(1,3),
+            'phone' => $this->faker->phoneNumber(),
+            'password' => $this->faker->password(), // password
             'remember_token' => Str::random(10),
+            'created_at' => $this->faker->dateTimeBetween('2024-01-01','now')
         ];
     }
 

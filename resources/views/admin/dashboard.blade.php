@@ -281,23 +281,23 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                const ctxxx = document.getElementById('formaparfavori').getContext('2d');
-                new Chart(ctxxx, {
-                    type: 'polarArea',
-                    data: {
-                        labels: @json($chart99['label']),
-                        datasets: @json($chart99['dataset'])
-                        
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
+                    const ctxxx = document.getElementById('formaparfavori').getContext('2d');
+                    new Chart(ctxxx, {
+                        type: 'line',
+                        data: {
+                            labels: @json($formationparfavoris['label']),
+                            datasets: @json($formationparfavoris['dataset'])
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                }
                             }
                         }
-                    }
-                })
-            });
+                    });
+
+                });
             </script>
 
 
@@ -345,11 +345,11 @@
                                                         </label>
                                                     </div>
                                                 </td>
-                                                <td style="max-width: 20px"><img
+                                                {{-- <td style="max-width: 20px"><img
                                                         src="{{ asset('images/65cb232eec61e-formation 1.png') }}"
                                                         alt="image" />
-                                                </td>
-                                                <td>{{ $comment->name }}</td>
+                                                </td> --}}
+                                                <td>{{ $comment->id }}</td>
                                                 <td>{{ $comment->contenu }}</td>
 
                                                 <td>

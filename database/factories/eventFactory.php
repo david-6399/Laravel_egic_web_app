@@ -17,10 +17,12 @@ class eventFactory extends Factory
     public function definition(): array
     {
         return [
-            'titre' => $this->faker->title,
-            'description' => $this->faker->paragraph,
-            'event_start' => $this->faker->date,
-            'event_end' => $this->faker->date,
+            'titre' => $this->faker->realTextBetween(10,50),
+            'description' => $this->faker->text(200),
+            'event_start' => $this->faker->dateTimeBetween('2024/01/01','now'),
+            'event_end' => $this->faker->dateTimeBetween('now','2024/12/30'),
+            'abonnement' => rand(1,20),
+            'image_path' => $this->faker->imageUrl()
         ];
     }
 }

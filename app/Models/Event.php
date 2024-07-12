@@ -19,4 +19,8 @@ class Event extends Model
         ->as('user_event')
         ->withTimestamps();
     }
+
+    public function comment(){
+        return $this->hasMany(comment::class,'event_id','id');
+    }
 }

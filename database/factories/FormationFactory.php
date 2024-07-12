@@ -19,13 +19,16 @@ class FormationFactory extends Factory
      */
     public function definition(): array
     {
+        $array = [1,2,3,4,5,6,7,8,9,10];
         return [
-            'nome_forma'=>$this->faker->title,
+            'nome_forma'=>$this->faker->realTextBetween(10,50),
             'duree_forma'=>$this->faker->numberBetween(1,20),
             'tarif_forma'=>$this->faker->numberBetween(10000,999999),
-            'cod_typeformation'=> type_formation::inRandomOrder()->first()->id,
-            'cod_program'=> program::inRandomOrder()->first()->id,
-
+            'cod_typeformation'=> rand(1,5),
+            'image_path' => $this->faker->imageUrl(),
+            'cod_program'=> $this->faker->unique()->numberBetween(1,10),
+            'favoris'=> rand(1,10),
+            'created_at' => $this->faker->dateTimeBetween('2024-01-01','now')
         ];
     }
 }

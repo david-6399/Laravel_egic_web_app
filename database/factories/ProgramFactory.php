@@ -17,7 +17,7 @@ class ProgramFactory extends Factory
     public function definition(): array
     {
         return [
-            'titre'=>$this->faker->title,
+            'titre'=>$this->faker->realTextBetween(10,50),
         ];
     }
 }

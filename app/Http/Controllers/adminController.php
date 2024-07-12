@@ -18,6 +18,7 @@ use App\Models\program;
 use App\Models\user;
 use App\Models\niv_etudiant;
 use App\Models\event;
+use App\Models\comment;
 
 class adminController extends Controller
 {  
@@ -36,9 +37,12 @@ class adminController extends Controller
             ])->flatten()->sortbydesc('created_at')->take(5);
         
         $comment = db::table('comments')->join('users','comments.user_id','users.id')
-            ->join('formations','comments.formation_id','formations.id')->get();
+            ->join('formations','comments.formation_id','formations.id')
+            // ->join('events','comments.event_id','events.id')
+            ->select('*')
+            ->get();
 
-        // dd($comment);
+        // dd($comment );
 
         $formation = formation::all();
         $userinfos = user::all();
@@ -140,47 +144,55 @@ class adminController extends Controller
 
         $formations = formation::pluck('nome_forma')->toarray();
         $favoris = formation::pluck('favoris')->toarray();
-       
-        $formationandfavoris = [];
-        foreach($formations as $index => $formation){
-            $test = $favoris[$index];
-            $formationandfavoris [] = [
-                'formation' => $formation,
-                'favoris' => $test
-            ];
-        }
-        usort($formationandfavoris, function($a, $b) {
-            return $b['favoris'] - $a['favoris'];
-        });
         
-        $formationandfavoris = array_slice($formationandfavoris, 0, 5);
 
-        $labels = array_column($formationandfavoris, 'formation');
-        $data = array_column($formationandfavoris, 'favoris');
+        $formationWithFavoris = [];
+        foreach($formations as $index => $formation){
+            $temp = $favoris[$index];
+            $formationWithFavoris [] = [
+                'formations' => $formation,
+                'favoris' => $temp
+            ];   
+        }
+        
+        usort($formationWithFavoris, function($a, $b){
+            return $b['favoris'] - $a['favoris'] ;
+        });
 
-        $chart99 = [
+        $formationWithFavoris = array_slice($formationWithFavoris , 0,7);
+        
+        $labels = array_column($formationWithFavoris , 'formations');
+        $data = array_column($formationWithFavoris, 'favoris');
+        
+        
+        $formationparfavoris = [
             'label' => $labels,
-            'dataset' => [
+            'dataset' =>[
                 [
-                    'label' => 'Favoris',
+                    'label' => 'formation par favoris',
                     'data' => $data,
-                    'backgroundColor' => [
-                        'rgb(255, 65, 145)',
-                        'rgb(255, 240, 120)',
-                        'rgb(54, 186, 152)',
-                        'rgb(244, 162, 97)',
-                        'rgb(231, 111, 81)'
-                    ],
-                    'borderWidth' => 1,
+                    'background' => 'rgba(75, 192, 192, 0.2)',
+                    'borderColor' => 'rgba(75, 192, 192, 0.2)',
+                    'borderWidth' => 1
                 ]
             ]
         ];
-        
 
+        
         if(auth::check()){
             $usertype = auth::user()->usertype;
             if ($usertype == 1) {
-                return view('admin.dashboard',compact('lastadditions','mostfavoris','userinfos','formation','niv_etudiant','comment','mycahrt','userchart','chart99'));
+                return view('admin.dashboard',compact('lastadditions',
+                    'mostfavoris',
+                    'userinfos',
+                    'formation',
+                    'niv_etudiant',
+                    'comment',
+                    'mycahrt',
+                    'userchart',
+                    'formationparfavoris')
+            
+            );
             }
             else{
                 abort(404);
@@ -208,7 +220,6 @@ class adminController extends Controller
         ->where('event_id',$event->id)
         ->get();
         
-        // dd($list_user_event);
         return view('admin.events.user-event-list',[
             'list_user_event' => $list_user_event ,
             'event' =>$event,
